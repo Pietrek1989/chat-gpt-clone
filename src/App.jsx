@@ -20,10 +20,23 @@ function App() {
         <button>+ New chat</button>
         <ul className="history"></ul>
         <nav>
-          <a>https://www.rodzenpiotr.com</a>
+          <a>https://rodzenpiotr.com</a>
         </nav>
       </section>
-
+      <section className="main">
+        <h1>Tech Pietrek GPT</h1>
+        <ul className="feed"></ul>
+      </section>
+      <div className="bottom-section">
+        <div className="input-container">
+          <input />
+          <div id="submit">-a</div>
+          <p className="info">
+            ChatGPT may produce inaccurate information about people, places, or
+            facts. ChatGPT August 3 Version
+          </p>
+        </div>
+      </div>
       <div>
         <button onClick={toggleTheme}>Toggle Mode</button>
       </div>

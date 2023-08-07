@@ -35,9 +35,14 @@
   --link-color: var(--link-color-light);
   --link-hover-color: var(--link-hover-color-light);
 }
-
+*,
+html,
+body {
+  box-sizing: border-box;
+}
 body {
   margin: 0;
+  padding: 0;
   min-width: 320px;
   min-height: 100vh;
   background-color: var(--main-background-color);
@@ -58,9 +63,11 @@ a:hover {
   color: var(--link-hover-color);
 }
 button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
+  border-radius: 5px;
+  border: 0.5px solid rgba(255, 255, 255, 0.5);
+  background-color: transparent;
+  padding: 10px;
+  margin: 10px;
   font-size: 1em;
   font-weight: 500;
   font-family: inherit;
@@ -73,4 +80,78 @@ button:hover {
 button:focus,
 button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
+}
+nav {
+  border: 0.5px solid rgba(255, 255, 255, 0.5);
+  padding: 10px;
+  margin: 10px;
+}
+input {
+  width: 100%;
+  border: none;
+  background-color: rgba(255, 255, 255, 0.05);
+  padding: 12px 15px;
+  border-radius: 5px;
+  box-shadow: rgba(0, 0, 0, 0.05) 0 54px 55px, rgba(0, 0, 0, 0.05) 0 12px 30px,
+    rgba(0, 0, 0, 0.05) 0 4px 6px, rgba(0, 0, 0, 0.05) 0 12px 3px,
+    rgba(0, 0, 0, 0.05) 0 -3px 5px;
+  font-size: 20px;
+}
+
+.app {
+  background-color: #343541;
+  display: flex;
+}
+.side-bar {
+  background-color: #202123;
+  height: 100vh;
+  width: 244px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.main {
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  text-align: center;
+}
+
+.history {
+  padding: 10px;
+  margin: 10px;
+  height: 100%;
+}
+.history li {
+  list-style-type: none;
+  padding: 15px 0;
+  cursor: pointer;
+}
+.info {
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 11px;
+  padding: 10px;
+}
+.bottom-section {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.input-container {
+  position: relative;
+  width: 100%;
+  max-width: 650px;
+}
+
+#submit {
+  position: absolute;
+  bottom: 15px;
+  right: 0;
+  cursor: pointer;
 }

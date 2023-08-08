@@ -7,7 +7,7 @@ function App() {
   const [message, setMessage] = useState(null);
   const [value, setValue] = useState("");
   const [currentTitle, setCurrentTitle] = useState(null);
-  const [previousChats, setPreviousChats] = useState([]);
+  const [previousChats, setPreviousChats] = useState({});
 
   const toggleTheme = () => {
     const newTheme = theme === "dark" ? "light" : "dark";
@@ -17,30 +17,6 @@ function App() {
   useEffect(() => {
     document.body.setAttribute("data-theme", theme);
   }, [theme]);
-
-  useEffect(() => {
-    if (value && message) {
-      setCurrentTitle(value);
-    }
-  }, [message]);
-
-  useEffect(() => {
-    if (currentTitle && message) {
-      setPreviousChats((previousChats) => [
-        ...previousChats,
-        {
-          title: currentTitle,
-          role: "user",
-          content: value,
-        },
-        {
-          title: currentTitle,
-          role: message.role,
-          content: message.content,
-        },
-      ]);
-    }
-  }, [message, currentTitle]);
 
   const getMessages = async () => {
     const options = {
@@ -58,23 +34,57 @@ function App() {
         options
       );
       const data = await response.json();
-      console.log(data);
-      setMessage(data.choices[0].message);
+      const botMessage = data.choices[0].message;
+
+      // Add the user message first
+      setPreviousChats((prevChats) => {
+        const newChats = { ...prevChats };
+        const title = currentTitle || value; // Use currentTitle if it exists; otherwise, use user input
+        newChats[title] = [
+          ...(newChats[title] || []),
+          {
+            title,
+            role: "user",
+            content: value,
+          },
+        ];
+        return newChats;
+      });
+
+      // Then add the bot message
+      setPreviousChats((prevChats) => {
+        const newChats = { ...prevChats };
+        const title = currentTitle || value; // Use currentTitle if it exists; otherwise, use user input
+        newChats[title] = [
+          ...(newChats[title] || []),
+          {
+            title,
+            role: botMessage.role,
+            content: botMessage.content,
+          },
+        ];
+        return newChats;
+      });
+
+      // Set currentTitle only if it's not set
+      if (!currentTitle) {
+        setCurrentTitle(value);
+      }
+
+      setMessage(botMessage);
     } catch (error) {
       console.error(error);
     }
   };
+
   const createNewChat = () => {
     setMessage(null);
     setValue("");
     setCurrentTitle(null);
   };
-  const currentChat = previousChats.filter(
-    (previousChats) => previousChats.title === currentTitle
-  );
-  const uniqueTitles = Array.from(
-    new Set(previousChats.map((previousChat) => previousChat.title))
-  );
+  const currentChat = previousChats[currentTitle] || [];
+
+  const uniqueTitles = Object.keys(previousChats);
 
   const handleClick = (uniqueTitle) => {
     setCurrentTitle(uniqueTitle);
@@ -85,6 +95,7 @@ function App() {
   console.log(message);
   console.log(uniqueTitles);
   console.log(previousChats);
+  console.log("curent", currentChat);
 
   return (
     <div className="app">

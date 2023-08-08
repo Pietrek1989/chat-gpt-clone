@@ -12,28 +12,48 @@
   -webkit-text-size-adjust: 100%;
 
   /* Dark Theme Colors */
-  --main-background-color-dark: #242424;
+  --main-background-color-dark: #444654;
+  --side-background-color-dark: #202123;
   --main-text-color-dark: #ffffff;
   --link-color-dark: #fff;
   --link-hover-color-dark: #535bf2;
+  --grey-05-dark: #3a3b3f;
+  --grey-005-dark: rgba(255, 255, 255, 0.05);
+  --grey-08-dark: rgba(255, 255, 255, 0.8);
+  --list-background-dark: #444654;
 
   /* Light Theme Colors */
   --main-background-color-light: #ffffff;
+  --side-background-color-light: #e7e5e5;
   --main-text-color-light: #213547;
   --link-color-light: #213547;
   --link-hover-color-light: #535bf2;
+  --grey-05-light: rgba(23, 14, 14, 0.5);
+  --grey-005-light: rgba(255, 255, 255, 0.05);
+  --grey-08-light: rgba(55, 36, 36, 0.8);
+  --list-background-light: #232430;
 
   /* Default to Dark Theme */
   --main-background-color: var(--main-background-color-dark);
+  --side-background-color: var(--side-background-color-dark);
   --main-text-color: var(--main-text-color-dark);
   --link-color: var(--link-color-dark);
   --link-hover-color: var(--link-hover-color-dark);
+  --grey-05: var(--grey-05-dark);
+  --grey-005: var(--grey-005-dark);
+  --grey-08: var(--grey-08-dark);
+  --list-background: var(--list-background-dark);
 }
 [data-theme="light"] {
   --main-background-color: var(--main-background-color-light);
+  --side-background-color: var(--side-background-color-light);
   --main-text-color: var(--main-text-color-light);
   --link-color: var(--link-color-light);
   --link-hover-color: var(--link-hover-color-light);
+  --grey-05: var(--grey-05-light);
+  --grey-005: var(--grey-005-light);
+  --grey-08: var(--grey-08-light);
+  --list-background: var(--list-background-light);
 }
 *,
 html,
@@ -64,11 +84,12 @@ a:hover {
 }
 button {
   border-radius: 5px;
-  border: 0.5px solid rgba(255, 255, 255, 0.5);
+  border: 0.5px solid var(--grey-05);
   background-color: transparent;
+  color: var(--main-text-color);
   padding: 10px;
   margin: 10px;
-  font-size: 1em;
+  font-size: 0.8em;
   font-weight: 500;
   font-family: inherit;
   cursor: pointer;
@@ -82,14 +103,14 @@ button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
 }
 nav {
-  border: 0.5px solid rgba(255, 255, 255, 0.5);
   padding: 10px;
   margin: 10px;
 }
 input {
   width: 100%;
   border: none;
-  background-color: rgba(255, 255, 255, 0.05);
+  background-color: var(--grey-005);
+  color: var(--main-text-color);
   padding: 12px 15px;
   border-radius: 5px;
   box-shadow: rgba(0, 0, 0, 0.05) 0 54px 55px, rgba(0, 0, 0, 0.05) 0 12px 30px,
@@ -99,16 +120,18 @@ input {
 }
 
 .app {
-  background-color: #343541;
   display: flex;
 }
 .side-bar {
-  background-color: #202123;
+  background-color: var(--side-background-color);
   height: 100vh;
   width: 244px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+}
+.side-bar button {
+  text-align: left;
 }
 
 .main {
@@ -132,7 +155,7 @@ input {
   cursor: pointer;
 }
 .info {
-  color: rgba(255, 255, 255, 0.5);
+  color: var(--grey-08);
   font-size: 11px;
   padding: 10px;
 }
@@ -151,7 +174,40 @@ input {
 
 #submit {
   position: absolute;
-  bottom: 15px;
-  right: 0;
+  top: 15px;
+  right: 10px;
   cursor: pointer;
+  width: 15px;
+}
+
+.feed {
+  width: 100%;
+  padding: 0;
+}
+.feed li {
+  display: flex;
+  background-color: var(--list-background);
+  width: 100%;
+  padding: 20px;
+  margin: 20px 0;
+}
+.feed p {
+  color: var(--grey-08);
+  font-size: 14px;
+}
+
+.feed p.role {
+  min-width: 100px;
+}
+
+.plus {
+  font-size: 1.2em;
+  padding-right: 5px;
+}
+.user-message {
+  background-color: blue; /* or whatever color you want for user messages */
+}
+
+.bot-message {
+  background-color: green; /* or whatever color you want for bot messages */
 }

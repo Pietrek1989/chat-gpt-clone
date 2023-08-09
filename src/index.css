@@ -20,7 +20,8 @@
   --grey-05-dark: #3a3b3f;
   --grey-005-dark: rgba(255, 255, 255, 0.05);
   --grey-08-dark: rgba(255, 255, 255, 0.8);
-  --list-background-dark: #444654;
+  --bot-background-dark: #343540;
+  --user-background-dark: #444654;
 
   /* Light Theme Colors */
   --main-background-color-light: #ffffff;
@@ -31,7 +32,8 @@
   --grey-05-light: rgba(23, 14, 14, 0.5);
   --grey-005-light: rgba(255, 255, 255, 0.05);
   --grey-08-light: rgba(55, 36, 36, 0.8);
-  --list-background-light: #232430;
+  --bot-background-light: #c8c1c1;
+  --user-background-light: #ffffff;
 
   /* Default to Dark Theme */
   --main-background-color: var(--main-background-color-dark);
@@ -42,7 +44,9 @@
   --grey-05: var(--grey-05-dark);
   --grey-005: var(--grey-005-dark);
   --grey-08: var(--grey-08-dark);
-  --list-background: var(--list-background-dark);
+  --bot-background: var(--bot-background-dark);
+  --user-background: var(--user-background-dark);
+  --background-switch: #28096b;
 }
 [data-theme="light"] {
   --main-background-color: var(--main-background-color-light);
@@ -53,7 +57,8 @@
   --grey-05: var(--grey-05-light);
   --grey-005: var(--grey-005-light);
   --grey-08: var(--grey-08-light);
-  --list-background: var(--list-background-light);
+  --bot-background: var(--bot-background-light);
+  --user-background: var(--user-background-light);
 }
 *,
 html,
@@ -122,17 +127,6 @@ input {
 .app {
   display: flex;
 }
-.side-bar {
-  background-color: var(--side-background-color);
-  height: 100vh;
-  width: 244px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-}
-.side-bar button {
-  text-align: left;
-}
 
 .main {
   height: 100vh;
@@ -144,16 +138,56 @@ input {
   text-align: center;
 }
 
+.side-bar {
+  background-color: var(--side-background-color);
+  height: 100vh;
+  width: 244px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.side-bar button {
+  text-align: left;
+}
+
 .history {
   padding: 10px;
   margin: 10px;
   height: 100%;
+  overflow-y: auto;
 }
+
 .history li {
   list-style-type: none;
-  padding: 15px 0;
+  padding: 10px 0;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  max-width: 100%; /* adjust this to your preferred maximum width */
+  overflow: hidden;
+  white-space: nowrap;
+  position: relative;
+  margin-bottom: 10px; /* some space between list items */
 }
+
+.history li:hover {
+  background-color: var(--grey-05);
+  border-radius: 10px;
+}
+
+.history li span {
+  flex-grow: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.history svg {
+  padding-right: 5px;
+  padding-top: 5px;
+  width: 25px;
+}
+
 .info {
   color: var(--grey-08);
   font-size: 11px;
@@ -183,16 +217,15 @@ input {
 .feed {
   width: 100%;
   padding: 0;
+  overflow-y: auto;
 }
 .feed li {
   display: flex;
-  background-color: var(--list-background);
   width: 100%;
   padding: 20px;
   margin: 20px 0;
 }
 .feed p {
-  overflow-y: auto;
   color: var(--grey-08);
   font-size: 14px;
 }
@@ -205,10 +238,65 @@ input {
   font-size: 1.2em;
   padding-right: 5px;
 }
-.user-message {
-  background-color: blue; /* or whatever color you want for user messages */
+.user {
+  background-color: var(--user-background);
 }
 
-.bot-message {
-  background-color: green; /* or whatever color you want for bot messages */
+.bot {
+  background-color: var(--bot-background);
+}
+.toggle {
+  position: absolute;
+  right: 0;
+  top: 10px;
+}
+/* The switch - the box around the slider */
+.switch {
+  font-size: 17px;
+  position: relative;
+  display: inline-block;
+  width: 3.5em;
+  height: 2em;
+}
+
+/* Hide default HTML checkbox */
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+/* The slider */
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: var(--background-switch);
+  transition: 0.5s;
+  border-radius: 30px;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 1.4em;
+  width: 1.4em;
+  border-radius: 50%;
+  left: 10%;
+  bottom: 15%;
+  box-shadow: inset 8px -4px 0px 0px #fff000;
+  background: var(--background-switch);
+  transition: 0.5s;
+}
+
+input:checked + .slider {
+  background-color: #2580cb;
+}
+
+input:checked + .slider:before {
+  transform: translateX(100%);
+  box-shadow: inset 15px -4px 0px 15px #fff000;
 }
